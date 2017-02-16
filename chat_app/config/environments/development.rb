@@ -76,7 +76,7 @@ Rails.application.configure do
   Paperclip::Attachment.default_options[:s3_host_name] = 's3-us-west-2.amazonaws.com'
 
 
-
+  config.action_cable.url = "ws://localhost:3000/cable"
 
 
   

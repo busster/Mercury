@@ -107,6 +107,8 @@ Rails.application.configure do
   Paperclip::Attachment.default_options[:path] = ":class/:attachment/:id_partition/:style/:filename"
   Paperclip::Attachment.default_options[:s3_host_name] = 's3-us-west-2.amazonaws.com'
 
+  config.web_socket_server_url = "wss://mercurychatapp.herokuapp.com/cable"
+  config.action_cable.allowed_request_origins = ['https://mercurychatapp.herokuapp.com', 'http://mercurychatapp.herokuapp.com']
 
   
 end
