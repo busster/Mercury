@@ -24,30 +24,28 @@ class MessagesController < ApplicationController
   # POST /messages
   # POST /messages.json
   def create
-    @message = Message.new(message_params)
-
-    p message_params
-
-    p @message
+    message = Message.new(message_params)
 
     chatroom = Chatroom.find_by(id: message_params[:chatroom_id])
-    @message.user_id = current_user.id
+    message.user_id = current_user.id
 
-    respond_to do |format|
-      if @message.save
-        format.html { redirect_to chatroom_url(chatroom) }
-        # format.html { redirect_to @message, notice: 'Message was successfully created.' }
-        # format.json { render :show, status: :created, location: @message }
+    if message.save
+      ActionCable.server.broadcast 'messages',
+        message: message.content,
+        user: message.user.user_name
+      # head chatroom_url(chatroom)
+
+      # render chatroom_url(chatroom)
+      head :ok
+
+    else
+      if chatroom
+        redirect_to chatroom_url(chatroom)
       else
-        if chatroom
-          format.html { redirect_to chatroom_url(chatroom) }
-        else
-          format.html { redirect_to chatrooms_path }
-        end
-        # format.html { render 'chatrooms/show' }
-        # format.json { render json: @message.errors, status: :unprocessable_entity }
+        redirect_to chatrooms_path
       end
     end
+
   end
 
   # PATCH/PUT /messages/1
