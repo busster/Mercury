@@ -1,6 +1,5 @@
 var ready = function() {
-  $("#new_message").bind("ajax:complete", function(event,xhr,status){
-    $('p').css('color', 'red');
+  $("#new_message").on("ajax:success", function(event,xhr,status){
     $('#message_content').val('');
   });
 };
