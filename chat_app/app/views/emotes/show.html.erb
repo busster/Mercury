@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @emote.user_id %>
+</p>
+
+<p>
+  <strong>Image:</strong>
+  <%= @emote.image %>
+</p>
+
+<%= link_to 'Edit', edit_emote_path(@emote) %> |
+<%= link_to 'Back', emotes_path %>
